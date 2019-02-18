@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using System.Linq;
+using GreatQuotes.Data;
 
 namespace GreatQuotes
 {
-     public class QuoteLoader
-     {
-          const string FileName = "quotes.xml";
+     public class QuoteLoader : IQuoteLoader
+    {
+        const string FileName = "quotes.xml";
 
           public IEnumerable<GreatQuote> Load()
           {
@@ -60,8 +61,18 @@ namespace GreatQuotes
                doc.Save(filename);
           }
 
-          #region Internal Data
-          static string DefaultData = 
+        IEnumerable<Data.GreatQuote> IQuoteLoader.Load()
+        {
+            return (System.Collections.Generic.IEnumerable<GreatQuotes.Data.GreatQuote>)Load();        }
+
+        public void Save(IEnumerable<Data.GreatQuote> quotes)
+        {
+            Save(quotes);
+        }
+
+
+        #region Internal Data
+        static string DefaultData = 
                @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <quotes>
      <quote author=""Eleanor Roosevelt"">Great minds discuss ideas; average minds discuss events; small minds discuss people.</quote>

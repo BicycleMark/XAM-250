@@ -20,7 +20,7 @@ namespace GreatQuotes
           public override void FinishedLaunching(UIApplication application)
           {
                quoteLoader = new QuoteLoader();
-               Quotes = quoteLoader.Load().ToList();
+               Quotes = quoteLoader.Load.ToList();
           }
 
           public override async void DidEnterBackground(UIApplication application)

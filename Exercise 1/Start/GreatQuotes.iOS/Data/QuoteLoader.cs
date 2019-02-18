@@ -3,44 +3,51 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using System.Linq;
+using GreatQuotes.Data;
 
 namespace GreatQuotes
 {
-     public class QuoteLoader
+     public class QuoteLoader  : IQuoteLoader
      {
-          const string FileName = "quotes.xml";
+        const string FileName = "quotes.xml";
 
-          public IEnumerable<GreatQuote> Load()
-          {
-               XDocument doc = null;
+        public IEnumerable<GreatQuote> Load
+        {
+            get
+            {
+                XDocument doc = null;
 
-               string filename = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
-                    "..", "Library", FileName);
+                string filename = Path.Combine(
+                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                     "..", "Library", FileName);
 
-               if (File.Exists(filename)) {
-                    try 
+                if (File.Exists(filename))
+                {
+                    try
                     {
-                         doc = XDocument.Load(filename);
-                    } 
-                    catch 
+                        doc = XDocument.Load(filename);
+                    }
+                    catch
                     {
                     }
-               } 
+                }
 
-               if (doc == null)
+                if (doc == null)
                     doc = XDocument.Parse(DefaultData);
 
-               if (doc.Root != null) {
-                    foreach (var entry in doc.Root.Elements("quote")) {
-                         yield return new GreatQuote(
-                              entry.Attribute("author").Value, 
-                              entry.Value);
+                if (doc.Root != null)
+                {
+                    foreach (var entry in doc.Root.Elements("quote"))
+                    {
+                        yield return new GreatQuote(
+                             entry.Attribute("author").Value,
+                             entry.Value);
                     }
-               }
-          }
+                }
+            }
+        }
 
-          public void Save(IEnumerable<GreatQuote> quotes)
+        public void Save(IEnumerable<GreatQuote> quotes)
           {
                string filename = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
@@ -60,8 +67,19 @@ namespace GreatQuotes
                doc.Save(filename);
           }
 
-          #region Internal Data
-          static string DefaultData = 
+        IEnumerable<Data.GreatQuote> IQuoteLoader.Load()
+        {
+            return (System.Collections.Generic.IEnumerable<GreatQuotes.Data.GreatQuote>)Load;
+        }
+
+        public void Save(IEnumerable<Data.GreatQuote> quotes)
+        {
+            Save(quotes);
+        }
+
+       
+        #region Internal Data
+        static string DefaultData = 
                @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <quotes>
      <quote author=""Eleanor Roosevelt"">Great minds discuss ideas; average minds discuss events; small minds discuss people.</quote>
