@@ -37,7 +37,8 @@ namespace GreatQuotes
 
                var editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit, OnEditItem);
                NavigationItem.RightBarButtonItem = editButton;
-          }
+               Quote.AddGestureRecognizer(new UITapGestureRecognizer(() => QuoteManager.Instance.SayQuote(quote)));
+        }
 
           void OnEditItem(object sender, EventArgs e)
           {

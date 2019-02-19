@@ -12,7 +12,6 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>GreatQuotes.Android</AssemblyName>
     <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
@@ -53,6 +52,7 @@
     <Compile Include="EditQuoteActivity.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Data\QuoteLoader.cs" />
+    <Compile Include="TextToSpeechService.Android.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -87,7 +87,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_action_new.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_new.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GreatQuotes.Data\GreatQuotes.Data.csproj">

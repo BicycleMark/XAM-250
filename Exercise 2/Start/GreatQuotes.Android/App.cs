@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using System;
 using Android.Runtime;
+using GreatQuotes.Data;
 
 namespace GreatQuotes
 {
@@ -14,7 +15,7 @@ namespace GreatQuotes
           public override void OnCreate()
           {
             QuoteLoaderFactory.Create = () => new QuoteLoader();
-
+            ServiceLocator.Instance.Add<ITextToSpeech, TextToSpeechService>();
             base.OnCreate();
           }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using GreatQuotes.Data;
 
 namespace GreatQuotes
 {
@@ -21,6 +22,20 @@ namespace GreatQuotes
         public void Save()
         {
             repo.Save(Quotes);
+        }
+        public void SayQuote(GreatQuote quote)
+        {
+            if (quote == null)
+                throw new ArgumentNullException("quote");
+
+            ITextToSpeech tts = ServiceLocator.Instance.Resolve<ITextToSpeech>();
+
+            var text = quote.QuoteText;
+
+            if (!string.IsNullOrWhiteSpace(quote.Author))
+                text += $" by {quote.Author}";
+
+            tts.Speak(text);
         }
     }
 }
