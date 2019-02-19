@@ -65,10 +65,10 @@ namespace GreatQuotes
         {
             return (System.Collections.Generic.IEnumerable<GreatQuotes.Data.GreatQuote>)Load();        }
 
-        public void Save(IEnumerable<Data.GreatQuote> quotes)
-        {
-            Save(quotes);
-        }
+        //public void Save(IEnumerable<Data.GreatQuote> quotes)
+        //{
+        //    Save(quotes);
+        //}
 
 
         #region Internal Data

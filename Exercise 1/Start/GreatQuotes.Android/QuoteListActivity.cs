@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Content;
 using Android.Views;
+using GreatQuotes.Data;
 
 namespace GreatQuotes
 {
@@ -15,7 +16,7 @@ namespace GreatQuotes
                base.OnCreate(bundle);
 
                adapter = new ListAdapter<GreatQuote>(this) {
-                    DataSource = App.Quotes,
+                    DataSource = (System.Collections.Generic.IList<GreatQuote>)QuoteManager.Instance.Quotes,
                     TextProc = t => t.QuoteText, 
                     DetailTextProc = t => t.Author,
                };
@@ -50,9 +51,9 @@ namespace GreatQuotes
                switch (item.ItemId) {
                     case Resource.Id.new_quote:
                          var quote = new GreatQuote();
-                         App.Quotes.Add(quote);
+                         QuoteManager.Instance.Quotes.Add(quote);
                          Intent detailIntent = new Intent(this, typeof(EditQuoteActivity));
-                         detailIntent.PutExtra("quoteIndex", App.Quotes.Count-1);
+                         detailIntent.PutExtra("quoteIndex", QuoteManager.Instance.Quotes.Count-1);
                          StartActivity(detailIntent);                         
                          break;
                }

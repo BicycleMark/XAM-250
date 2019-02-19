@@ -51,7 +51,6 @@
     <Compile Include="QuoteDetailActivity.cs" />
     <Compile Include="EditQuoteActivity.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="Data\GreatQuote.cs" />
     <Compile Include="Data\QuoteLoader.cs" />
   </ItemGroup>
   <ItemGroup>
