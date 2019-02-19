@@ -6,24 +6,37 @@ namespace GreatQuotes
 {
     public class QuoteManager
     {
-        static readonly Lazy<QuoteManager> instance = new Lazy<QuoteManager>(() => new QuoteManager());
-        public static QuoteManager Instance { get { return instance.Value; } }
+
+       
+        public static QuoteManager Instance { get; private set; }
 
         readonly IQuoteLoader loader;
+        readonly ITextToSpeech textToSpeech;
         public IList<GreatQuote> Quotes { get; private set; }
 
-        private QuoteManager()
+        //private QuoteManager()
+        //{
+        //    loader = QuoteLoaderFactory.Create();
+        //    Quotes = new ObservableCollection<GreatQuote>(loader.Load());
+        //}
+        public QuoteManager(IQuoteLoader loader, ITextToSpeech tts)
         {
-            loader = QuoteLoaderFactory.Create();
+            if (Instance != null)
+            {
+                throw new Exception("Can only create a single QuoteManager.");
+            }
+            Instance = this;
+            this.loader = loader;
+            this.textToSpeech = tts;
             Quotes = new ObservableCollection<GreatQuote>(loader.Load());
         }
-
         public void SayQuote(GreatQuote quote)
         {
             if (quote == null)
                 throw new ArgumentNullException(nameof(quote));
 
-            ITextToSpeech tts = ServiceLocator.Instance.Resolve<ITextToSpeech>();
+            //ITextToSpeech tts = ServiceLocator.Instance.Resolve<ITextToSpeech>();
+            ITextToSpeech tts = this.textToSpeech;
 
             var text = quote.QuoteText;
 

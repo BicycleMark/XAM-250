@@ -7,14 +7,19 @@ namespace GreatQuotes
 	[Application(Icon="@drawable/icon", Label="@string/app_name")]
 	public class App : Application
 	{
-		public App(IntPtr h, JniHandleOwnership jho) : base(h, jho)
+        readonly SimpleContainer container = new SimpleContainer();
+        public App(IntPtr h, JniHandleOwnership jho) : base(h, jho)
 		{
 		}
 
 		public override void OnCreate()
 		{
-			QuoteLoaderFactory.Create = () => new QuoteLoader();
-			ServiceLocator.Instance.Add<ITextToSpeech, TextToSpeechService>();
+            //QuoteLoaderFactory.Create = () => new QuoteLoader();
+            container.Register<IQuoteLoader, QuoteLoader>();
+            container.Register<ITextToSpeech, TextToSpeechService>();
+            container.Create<QuoteManager>();
+
+           // ServiceLocator.Instance.Add<ITextToSpeech, TextToSpeechService>();
 
 			base.OnCreate();
 		}
